@@ -1,6 +1,7 @@
 module.exports = {
   title: "渔网的收获",
   description: "",
+  base: '/',
   markdown: {
     lineNumbers: true
   },
@@ -85,6 +86,8 @@ module.exports = {
     },
     lastUpdated: "更新时间",
     docsDir: "docs",
+    editLinks: true,
+    editLinkText: "本文源码地址",
   },
   plugins: [
 
