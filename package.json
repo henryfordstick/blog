@@ -1,0 +1,16 @@
+{
+  "name": "blog",
+  "version": "1.1.2",
+  "description": "记录技术成长的点滴",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "repository": "git@github.com:henryfordstick/henryblog.git",
+  "author": "henry",
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.4"
+  }
+}
