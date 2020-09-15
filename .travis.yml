@@ -1,0 +1,19 @@
+sudo: required
+language: node_js
+node_js:
+  - stable  # 要安装当前node最稳定版本
+before_install:
+  - npm install
+script:
+  - npm run build
+deploy:
+  provider: pages
+  target-branch: blog
+  skip-cleanup: true
+  local-dir: docs/.vuepress/dist
+  repo: henryfordstick/henryblog
+  github-token: $REPO_TOKEN
+  keep-history: true
+  on:
+    branch: master
+
