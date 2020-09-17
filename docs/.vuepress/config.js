@@ -70,6 +70,20 @@ module.exports = {
         {
           title: "经典算法题",
           collapsable: false,
+          children: [
+            'arith-written-everyDay'
+          ]
+        },
+        {
+          title: "探索源码系列",
+          collapsable: false,
+          children: [
+            'arith-source-debounce-throttle',
+            'arith-source-new',
+            'arith-source-call-bind-apply',
+            'arith-source-parse-stringify',
+            'arith-source-emitter'
+          ]
         }
       ],
       // '/interview/':[],
