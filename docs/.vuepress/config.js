@@ -1,7 +1,6 @@
 module.exports = {
   title: "渔网的收获",
   description: "",
-  base: '/',
   markdown: {
     lineNumbers: true
   },
