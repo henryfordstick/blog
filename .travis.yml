@@ -8,7 +8,7 @@ script:
   - npm run build
 deploy:
   provider: pages
-  target-branch: blog
+  target-branch: master
   skip-cleanup: true
   local-dir: docs/.vuepress/dist
   repo: henryfordstick/henryfordstick.github.io
