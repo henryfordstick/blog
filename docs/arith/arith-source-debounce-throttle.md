@@ -1,14 +1,14 @@
 # 防抖（debounce)和节流（throttle）
-### 1、防抖
+## 1、防抖
 在触发事件后n秒才会执行，如果n秒内事件又被触发，则重新计时
 
-##### 案例
+#### 案例
 
 - 搜索联想词功能（连续输入，只请求最后一次的结果）。
 
 - resize、scroll、mousemove 等等，但有些时候我们并不希望在事件持续触发的过程中那么频繁地去执行函数。
 
-##### 非立即执行版
+#### 非立即执行版
 非立即执行版的意思是触发事件后函数不会立即执行，而是在 n 秒后执行，如果在 n 秒内又触发了事件，则会重新计算函数执行时间。
 ```typescript
 const debounce = (
@@ -26,7 +26,7 @@ const debounce = (
 }
 ```
 
-##### 立即执行版
+#### 立即执行版
 立即执行版的意思是触发事件后函数会立即执行，然后 n 秒内不触发事件才能继续执行函数的效果。
 ```typescript
 const debounce = (
@@ -46,7 +46,7 @@ const debounce = (
   }
 }
 ```
-##### 结合两种写法
+#### 结合两种写法
 ```typescript
 const debounce = (
   fn:(unknown) => unknown,
@@ -73,13 +73,13 @@ const debounce = (
   }
 }
 ```
-### 2、节流
+## 2、节流
 所谓节流，就是指连续触发事件但是在 n 秒中只执行一次函数。节流会稀释函数的执行频率。
-##### 案例
+#### 案例
 - 鼠标不断点击触发，mousedown(单位时间内只触发一次)
 
 - 监听滚动事件，比如是否滑到底部自动加载更多，用throttle来判断
-##### 时间戳
+#### 时间戳
 ```typescript
 const throttle = (
   fn:(unknown) => unknown,
@@ -95,7 +95,7 @@ const throttle = (
   }
 }
 ```
-##### 定时器
+#### 定时器
 ```typescript
 const throttle = (
   fn:(unknown) => unknown,
@@ -112,7 +112,7 @@ const throttle = (
   }
 }
 ```
-##### 结合两种写法
+#### 结合两种写法
 ```typescript
 const throttle = (
   fn: (unknown) => unknown,

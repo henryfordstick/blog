@@ -46,8 +46,12 @@ module.exports = {
           collapsable: false,
         },
         {
-          title: '工程化',
+          title: '网络',
           collapsable: false,
+          children: [
+            'internet-http',
+            'internet-https'
+          ]
         },
         {
           title: '编程基础',
