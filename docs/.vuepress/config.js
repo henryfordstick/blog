@@ -60,6 +60,9 @@ module.exports = {
         {
           title: '编程基础',
           collapsable: false,
+          children:[
+            'basis-ts1'
+          ]
         },
         // {
         //   title: '总结思考',

@@ -46,56 +46,74 @@
 
 ## 代码实现发布订阅
 追根溯源理解了他们的概念和思想以后，接下来回归主题手动实现一个发布订阅。
-```typescript
+```javascript
 /**
  * 实现一个EventEmitter类，这个类包含一下方法：on/off/once/trigger
- * on（监听事件，该事件可以被触发多次）
- * once（也是监听事件，但只能触发一次）
- * off(移除指定事件的某个回调方法或者所有回调方法)
- * tigger(触发指定事件)
+ * 1、on 添加订阅者（往消息中心添加事件）。同一个事件名称可能有多个订阅者。
+ * 2、off 删除订阅者 如果不传callback，则删除订阅者，否则仅删除callback对应的订阅者
+ * 3、once 添加订阅者，但订阅者只接收一次消息，以后就不再接收了。
+ * 4、trigger 发布事件，遍历指定的事件，然后循环触发订阅者。
  */
 
 class EventEmitter{
-  protected eventQueue: object = {};
-  
-  public on(eventName: string,callback: (data?:unknown) => void){
-    this.eventQueue[eventName] = this.eventQueue[eventName] || [];
-    this.eventQueue[eventName].push(callback);
-  }
-
-  public off(eventName: string){
-    if(this.eventQueue[eventName]){
-      this.eventQueue[eventName] = null;
-    } else {
-      return null;
+    constructor(){
+        this.eventQueue = {};
     }
-  }
-
-  public once(eventName: string,callback:(data?:unknown) => void){
-    let fn = () => {
-      callback();
-      this.off(eventName);
-    };
-    this.on(eventName,fn);
-  }
-
-  public trigger(eventName: string,...args){
-    if(this.eventQueue[eventName]){
-      this.eventQueue[eventName].forEach(item => item(...args))
-    } else{
-      console.log(`${eventName} is not defined`);
+    // 添加订阅者，这里往消息中心添加事件。同一个订阅名称可能会有多个订阅者。
+    on(eventName,callback){
+        this.eventQueue[eventName] = this.eventQueue[eventName] || [];
+        this.eventQueue[eventName].push(callback);
     }
-  }
+    
+    // 删除订阅者，如果不传callback，则全部删除，否则仅删除对应的callback
+    off(eventName,callback){
+        if(this.eventQueue[eventName]){
+            this.eventQueue[eventName] = callback ? this.eventQueue[eventName].filter(x => x !== callback) : [];
+        } else {
+            return false;
+        }
+    }
+    
+    // 添加订阅者，但是只执行一次
+    once(eventName,callback){
+        let fn = (...args) => {
+            callback.apply(null,args);
+            this.off(eventName,fn);
+        };
+        this.on(eventName,fn);
+    }
+
+    trigger(eventName,...args){
+        if(this.eventQueue[eventName]){
+            this.eventQueue[eventName].forEach((fn) => fn(...args))
+        }
+    }
 }
+// ------------------ 测试用例 --------------------
+let test = new EventEmitter();
 
-const test = new EventEmitter();
-test.on('change',(name) => console.log(name));
-test.once('change',(name) => console.log(name));
-test.trigger('change','name')
+test.on('name',(name) => {
+    console.log(name + '第一个订阅');
+});
+
+test.on('name',(name) => {
+    console.log(name + '第二个订阅');
+});
+
+test.on('name',(name) => {
+    console.log(name + '第三个订阅');
+});
+
+test.trigger('name','李四'); // 这里三个订阅者同时收到消息
+
+test.once('name',(name) => { // 这里添加一个订阅一次的订阅者
+    console.log(name + '第四个订阅'); 
+});
+
+test.trigger('name','张三'); // 这里四个订阅者同时收到消息
+
+test.trigger('name','小红'); // 这里只触发三个订阅者，因为第四个订阅者只订阅了一次
 ```
-
-
-
 
 ## 相关链接
 - [发布订阅模式与观察者模式](https://blog.csdn.net/hf872914334/article/details/88899326)
