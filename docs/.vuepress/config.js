@@ -92,7 +92,8 @@ module.exports = {
             'arith-source-new',
             'arith-source-call-bind-apply',
             'arith-source-parse-stringify',
-            'arith-source-emitter'
+            'arith-source-emitter',
+            'arith-source-drag'
           ]
         }
       ],
