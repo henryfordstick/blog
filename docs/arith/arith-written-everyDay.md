@@ -45,3 +45,42 @@ function sortedArrayToBST(
 ```typescript
 
 ```
+
+#### 4、生成一个链表，保存100个随机生成的整数，整数不分正负。
+
+#### 5、请实现一个cacheRequest方法，保证发出多次同一个ajax请求时都能拿到数据，而实际上只发出一次请求。
+```javascript
+const request = (url,option) => new Promise(res => {
+  setTimeout(() => { // 用来代替请求的
+    res({data:option})
+  })
+});
+
+const cache = new Map(); // 用来判断是否同一个请求
+const cacheRequest = (url,option) => { // 请求的更多参数可用option传入，如method,
+  let key = `${url}:${option.method}`;
+  if(cache.get(key)){
+    if(cache.get(key).status === "pending"){
+      return cache.get(key).myWait;
+    }
+    return Promise.resolve(cache.get(key).data); // 有则返回请求数据，无则发起请求
+  } else {
+    let requestApi = request(url,option);
+    cache.set(key,{status: "pending",myWait: requestApi});
+    return requestApi.then(res => {
+      cache.set(key,{status: "success",data: res});
+      return Promise.resolve(res);
+    }).catch(err => {
+      cache.set(key,{status: "fail", data: err});
+      Promise.reject(err);
+    })
+  }
+};
+
+cacheRequest('ur1').then(res => console.log(res));
+cacheRequest('ur1').then(res => console.log(res));
+
+setTimeout(() => {
+  cacheRequest('ur1').then(res => console.log(res));
+},2000)
+```

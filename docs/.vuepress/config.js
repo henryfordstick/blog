@@ -36,6 +36,9 @@ module.exports = {
         {
           title: 'Framework',
           collapsable: false,
+          children: [
+            'react-历史发展'
+          ]
         },
         {
           title: 'HTML/CSS',
@@ -61,7 +64,8 @@ module.exports = {
           title: '编程基础',
           collapsable: false,
           children:[
-            'basis-ts1'
+            'basis-ts1',
+            'basis-ts2',
           ]
         },
         // {
