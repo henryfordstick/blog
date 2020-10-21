@@ -37,7 +37,8 @@ module.exports = {
           title: 'Framework',
           collapsable: false,
           children: [
-            'react-历史发展'
+            'react-library',
+            'react-library-core'
           ]
         },
         {
