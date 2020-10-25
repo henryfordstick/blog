@@ -38,7 +38,9 @@ module.exports = {
           collapsable: false,
           children: [
             'react-library',
-            'react-library-core'
+            'react-library-core',
+            'react-source-one',
+
           ]
         },
         {
@@ -56,9 +58,11 @@ module.exports = {
           title: '网络基础',
           collapsable: false,
           children: [
+            'internet-movement',
             'internet-osi',
             'internet-http',
-            'internet-https'
+            'internet-https',
+            'internet-tcp',
           ]
         },
         {
