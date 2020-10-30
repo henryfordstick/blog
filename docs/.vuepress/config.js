@@ -40,7 +40,8 @@ module.exports = {
             'react-library',
             'react-library-core',
             'react-source-one',
-
+            'react-native',
+            'react-native-principle'
           ]
         },
         {
