@@ -41,7 +41,8 @@ module.exports = {
             'react-library-core',
             'react-source-one',
             'react-native',
-            'react-native-principle'
+            'react-native-principle',
+            'react-native-bridge'
           ]
         },
         {
@@ -84,7 +85,9 @@ module.exports = {
           title: "算法知识",
           collapsable: false,
           children: [
-            'arith-basic'
+            'arith-basic',
+            'arith-time',
+            'arith-array'
           ]
         },
         {
