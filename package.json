@@ -10,7 +10,8 @@
   "repository": "git@github.com:henryfordstick/henryblog.git",
   "author": "henry",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "vuepress": "^1.5.4"
   }
+
 }

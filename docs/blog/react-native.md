@@ -1,8 +1,8 @@
 # React Native 使用总结
 - 了解App分类
-- 背景
 - React Native 框架工作原理
 - React Native 运行原理
+- React Native 性能调优
 
 ## 了解App分类
 目前App的技术栈可以分为四类：
@@ -30,13 +30,6 @@
 - 优点：性能高
 - 缺点：开发维护成本高，这种技术栈只能用在一个平台，不能跨平台。最重要iOS版本更新也成问题。
 
-## 背景
-Facebook 曾致力于使用 HTML5 进行移动端的开发 ，结果发现在性能方面与原生的 App
-相差距越来越大。最终，于 2015年3月正式发布了 React Native 框架，此框架专注于移动端 App 的开发。
-
-在最初发布的版本中， React Native 框架只用于开发 iOS 平台的 App, 2015年
-9月， Facebook 发布了支持 Android 平台的 React Native 框架 至此， React Native 
-框架真正实现了跨平台的移动 App 开发，此举简直就是移动 App 开发人员的福音。
 
 ## React Native 框架工作原理
 
