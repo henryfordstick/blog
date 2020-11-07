@@ -132,6 +132,14 @@ module.exports = {
     editLinkText: "本文源码地址",
   },
   plugins: [
-
+    [
+      "@vuepress/pwa",
+      {
+        serviceWorker: true,
+        updatePopup: true,
+      },
+    ],
+    ["@vuepress/medium-zoom", true],
+    ["@vuepress/back-to-top", true],
   ]
 };
