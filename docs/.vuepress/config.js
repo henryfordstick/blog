@@ -4,11 +4,12 @@ module.exports = {
   markdown: {
     lineNumbers: true
   },
+  base: '/',
   head: [
     ['link', { rel: 'icon', href: '/user.png' }]
   ],
   themeConfig:{
-    repo: 'henryfordstick/blog',
+    repo: 'henryfordstick',
     nav: [
       {
         text: "博客",
