@@ -1,4 +1,4 @@
-# HTTPS协议总结
+# HTTPS 协议总结
 HTTPS 是以安全为目标的 HTTP 通道，简单讲是 HTTP 的安全版。
 - HTTPS 协议定义
 - HTTPS 流程分析
@@ -74,7 +74,7 @@ CA 证书都是权威机构认证的，现在浏览器或操作系统都内置�
 服务器端生成数字证书：
 
 ![服务端生成证书](/images/osi-https-hash1.png)
-- 将服务器公钥进行Hash加密，生成信息摘要。
+- 将服务器公钥进行 Hash 加密，生成信息摘要。
 - 将信息摘要通过 CA 私钥加密，生成数字签名。
 - 将服务器公钥，数字签名组合成数字证书。
 - 将数字证书发给客户端。
@@ -91,8 +91,8 @@ CA 证书都是权威机构认证的，现在浏览器或操作系统都内置�
 
 ## HTTPS 流程分析
 下图是一次 HTTPS 请求的流程图，我们一起来分析一下。
-![HTTPS流程图](/images/osi-https.png)
-1. 客户端发起请求，同时将客户端支持的TLS 协议版本号、加密规则、一个随机数（Client random），发送给服务器。
+![HTTPS 流程图](/images/osi-https.png)
+1. 客户端发起请求，同时将客户端支持的 TLS 协议版本号、加密规则、一个随机数（Client random），发送给服务器。
 2. 服务器上有安装好的认证证书（将服务器的私钥，通过权威机构 CA 认证后，生成的证书公钥和私钥）。
 3. 服务端确认双方使用的加密方法，使用 hash 算法签名证书后，将数字证书、一个服务器端生成的随机数（Server random），发送给客户端。
 4. 客户端验证证书。
@@ -118,7 +118,7 @@ CA 证书都是权威机构认证的，现在浏览器或操作系统都内置�
 - 精简证书大小
 - 会话复用
 ### False Start
-False Start 有抢跑的意思，意味着不按规则行事。TLS False Start 是指客户端在发送 
+False Start 有抢跑的意思，意味着不按规则行事。TLS False Start 是指客户端在发送
 Change Cipher Spec Finished 同时发送应用数据（如 HTTP 请求），服务端在 TLS 握手完成时直接返回应用数据（如 HTTP 响应）。
 这样，应用数据的发送实际上并未等到握手全部完成，故谓之抢跑。
 
@@ -127,7 +127,7 @@ Change Cipher Spec Finished 同时发送应用数据（如 HTTP 请求），服�
 不需要修改 TLS 协议，目前大部分浏览器默认都会启用。
 
 ### 精简证书大小
-如果需要进一步减小证书大小，可以选择 ECC（Elliptic Curve Cryptography，椭圆曲线密码学）证书。256 位的 ECC Key 
+如果需要进一步减小证书大小，可以选择 ECC（Elliptic Curve Cryptography，椭圆曲线密码学）证书。256 位的 ECC Key
 等同于 3072 位的 RSA Key，在确保安全性的同时，体积大幅减小。下面是一个对比：
 
 | 对称加密 Key 长度 | RSA Key 长度 | ECC Key 长度 |

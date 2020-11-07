@@ -1,5 +1,5 @@
-# React核心知识
-总结一下React的核心知识。
+# React 核心知识
+总结一下 React 的核心知识。
 ## Fiber
 React 框架内部的运作可以分为 3 层：
 - Virtual DOM 层，描述页面长什么样
@@ -24,14 +24,14 @@ Fiber 把更新过程碎片化，每执行完一段更新过程，就把控制�
 
 Fiber Reconciler 在执行过程中，会分为 两 个阶段：**render 阶段** 和 **commit 阶段**。
 
-### Render阶段
+### Render 阶段
 Render 阶段包括 render 以前的生命周期。在这个阶段执行过程中会根据任务的优先级，选择执行或者暂停。故可能发生某个生命周期被执行多次的情况。
 
 :::tip
 Render 阶段可以被打断，让优先级更高的任务先执行，从框架层面大大降低了页面掉帧的概率。
 :::
 
-### Commit阶段
+### Commit 阶段
 Render 之后的生命周期，都属于 commit phase。在这个阶段执行过程中不会被打断，会一直执行到底。
 
 ## 错误处理
@@ -44,7 +44,7 @@ React 新增了两种方式来捕获组件报错，componentDidCatch，static ge
   - 在 render 阶段触发。
   - 支持服务器端渲染。
   - 常用于更新 state，显示友好的错误提示。
-  
+
 ```jsx harmony
 class ErrorBoundary extends React.Component {
   state = { hasError: false };
@@ -81,7 +81,7 @@ const Clock = React.lazy(() =>import('./Clock'));
 </Suspense>;
 ```
 
-### Suspense原理
+### Suspense 原理
 Suspense 组件可以等待某些操作结束后，再进行渲染，这个等待并不是真正的等待，而是
 **错误捕获的方式，循环进行调用**。
 
@@ -106,7 +106,7 @@ const createFetcher = promiseTask => {
   };
 };
 ```
-Suspense内部
+Suspense 内部
 ```jsx harmony
 getDerivedStateFromError(error) {
    if (isPromise(error)) {
@@ -164,7 +164,7 @@ class MyComponent extends React.Component {
   }
 }
 ```
-ref 编写完成之后，就可以通过 this.myRef.current获取 ref 数据。
+ref 编写完成之后，就可以通过 this.myRef.current 获取 ref 数据。
 :::tip
 ref 可以添加在 class 组件上，通过 ref.current 可以访问到组件的实例，但你不能在函数组件上使用 ref 属性，因为它们没有实例。
 
@@ -219,7 +219,7 @@ React 组件的构造函数将会在装配之前被调用。构造函数是初�
 或者返回 null 来表明新属性不需要更新任何状态。getDerivedStateFromProps 只存在一个目的。
 它**使组件能够根据 props 的更改来更新其内部状态**。
 
-getDerivedStateFromProps 之所以是**静态**的，是因为 static 方法中不能获取到实例对象上的 
+getDerivedStateFromProps 之所以是**静态**的，是因为 static 方法中不能获取到实例对象上的
 state 和方法，所以这个方法内不能调用 setState，这就可以避免不守规矩的程序员误用。
 可以看出 react 对新的生命周期考虑还是挺周全的。
 

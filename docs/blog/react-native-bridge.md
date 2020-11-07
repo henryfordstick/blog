@@ -1,69 +1,69 @@
-# React Native桥接之路
-React Native 是Facebook开源的跨平台框架，为了讲解方便，我将React Native简称为RN。RN官网说能用JavaScript编写原生移动应用，而且用JS解决不了的问题，也可以呼叫原生同学。
-那么这里就牵扯到了RN与Native的通信问题，接下来我从下面几个话题由浅入深探讨一下！！！
-- 说说RN的故事
-- RN为什么能编写原生应用
-- RN是如何构造应用布局的
+# React Native 桥接之路
+React Native 是 Facebook 开源的跨平台框架，为了讲解方便，我将 React Native 简称为 RN。RN 官网说能用 JavaScript 编写原生移动应用，而且用 JS 解决不了的问题，也可以呼叫原生同学。
+那么这里就牵扯到了 RN 与 Native 的通信问题，接下来我从下面几个话题由浅入深探讨一下！！！
+- 说说 RN 的故事
+- RN 为什么能编写原生应用
+- RN 是如何构造应用布局的
 - 根据项目唠桥接
 - 相关链接
 
 
-## 说说RN的故事
-Facebook 曾致力于使用 HTML5 进行移动端的开发 ，结果发现在性能方面与原生的 App 相差距越来越大。最终，Facebook 放弃了RN 技术路线，于 2015年3月正式发布了 RN 框架，此框架专注于移动端 App 的开发。
+## 说说 RN 的故事
+Facebook 曾致力于使用 HTML5 进行移动端的开发 ，结果发现在性能方面与原生的 App 相差距越来越大。最终，Facebook 放弃了 RN 技术路线，于 2015 年 3 月正式发布了 RN 框架，此框架专注于移动端 App 的开发。
 
-在最初发布的版本中， RN 框架只用于开发 iOS 平台的 App, 2015年9月， Facebook 发布了支持 Android 平台的 RN 框架 至此， RN 框架真正实现了跨平台的移动 App 开发，此举简直就是移动 App 开发人员的福音。
+在最初发布的版本中， RN 框架只用于开发 iOS 平台的 App, 2015 年 9 月， Facebook 发布了支持 Android 平台的 RN 框架 至此， RN 框架真正实现了跨平台的移动 App 开发，此举简直就是移动 App 开发人员的福音。
 
-## RN为什么能编写原生应用
-在讲这个问题之前，我们先看一下RN的架构图。
-![React Native架构](/images/react-native-con.jpeg)
+## RN 为什么能编写原生应用
+在讲这个问题之前，我们先看一下 RN 的架构图。
+![React Native 架构](/images/react-native-con.jpeg)
 - 绿色部分是应用开发的部分，业务逻辑代码就在这里。
 - 蓝色部分是跨平台的代码和引擎，一般不会改写蓝色部分。
 - 黄色代码平台相关的代码，做定制化的时候会添加修改代码。是各个平台用来做桥接(Bridge)的。
 - 红色部分是系统平台的东西。红色上面有一个虚线，表示所有平台相关的东西都通过 Bridge 隔离开来了。
 
-一般情况下，开发所写的JS代码都在绿色部分，黄色部分是用 原代码写的桥接组件，其他部分不用涉及。
+一般情况下，开发所写的 JS 代码都在绿色部分，黄色部分是用 原代码写的桥接组件，其他部分不用涉及。
 
-或许这样的解释有点笼统，没关系，我们下面详细讲解一下RN的整个运行过程。
-### RN的架构
+或许这样的解释有点笼统，没关系，我们下面详细讲解一下 RN 的整个运行过程。
+### RN 的架构
 那么我们把前面架构图的的虚线上面部分再画详细点，就得到了下面这张图😁！
 
-![RN原理](/images/rn-bridge.jpg)
+![RN 原理](/images/rn-bridge.jpg)
 
-我们可以把RN的整个架构分为三层：
-- 第一层是用React写的JS代码层（也就是架构图中**绿色部分**），这里的代码跑在JS引擎`JavaScriptCore`上。在Debug模式下跑在Chrome浏览器的V8引擎上，通过`Websocket`发送到移动设备。
+我们可以把 RN 的整个架构分为三层：
+- 第一层是用 React 写的 JS 代码层（也就是架构图中**绿色部分**），这里的代码跑在 JS 引擎`JavaScriptCore`上。在 Debug 模式下跑在 Chrome 浏览器的 V8 引擎上，通过`Websocket`发送到移动设备。
 
-- 第二层是桥接JS和 Native。在0.59所有的通信都需要经过JSON序列化以后通过Bridge异步通信。0.59开始用了新架构Fabric实现的JSI实现了js 和 native的直接共享内存调用，而无需再经过Bridge。
+- 第二层是桥接 JS 和 Native。在 0.59 所有的通信都需要经过 JSON 序列化以后通过 Bridge 异步通信。0.59 开始用了新架构 Fabric 实现的 JSI 实现了 js 和 native 的直接共享内存调用，而无需再经过 Bridge。
 
-- 第三层是Native层，主要渲染原生组件和传递事件。React写的 **Virtual DOM 节点是利用`yoga`解析**，映射为原生组件，所以能实现一套代码在 Android 和 iOS原生端使用。
+- 第三层是 Native 层，主要渲染原生组件和传递事件。React 写的 **Virtual DOM 节点是利用`yoga`解析**，映射为原生组件，所以能实现一套代码在 Android 和 iOS 原生端使用。
 
-React自身是不直接绘制UI的，UI绘制是非常耗时的操作，原生组件最擅长这事情。
+React 自身是不直接绘制 UI 的，UI 绘制是非常耗时的操作，原生组件最擅长这事情。
 :::tip
-在一定程度上，React Native和NodeJS有异曲同工之妙。它们都是通过扩展JavaScript Engine, 使它具备强大的本地资源和原生接口调用能力，然后结合JavaScript丰富的库和社区和及其稳定的跨平台能力， 把Javascript的魔力在浏览器之外的地方充分发挥出来。
+在一定程度上，React Native 和 NodeJS 有异曲同工之妙。它们都是通过扩展 JavaScript Engine, 使它具备强大的本地资源和原生接口调用能力，然后结合 JavaScript 丰富的库和社区和及其稳定的跨平台能力， 把 Javascript 的魔力在浏览器之外的地方充分发挥出来。
 :::
 
-### Yoga引擎
-**Yoga是一个基于 *Flexbox* 的跨平台布局引擎**，最初是Facebook在2014年推出的一个CSS布局的开源库，2016年改版并更名为Yoga。
+### Yoga 引擎
+**Yoga 是一个基于 *Flexbox* 的跨平台布局引擎**，最初是 Facebook 在 2014 年推出的一个 CSS 布局的开源库，2016 年改版并更名为 Yoga。
 
 **Flexbox**(CSS Flexible Box) 是用来处理 web 上的复杂布局。Yoga 并没有实现全部 CSS Flexbox。
 它省略了非布局属性，如设置颜色。Yoga 改进了一些 Flexbox 的属性来提供更好的从右到左的支持。最后，Yoga 增加了一个新的比例（AspectRatio）属性来处理在布置某些元素如图片时常见的需求。
 
-## RN是如何构造应用布局的
-在此之前，先说说RN的工作方式。
+## RN 是如何构造应用布局的
+在此之前，先说说 RN 的工作方式。
 ### 线程模型
-![RN工作方式](/images/rn-old-ui.jpeg)
-RN中有三个线程，分别如下：
-- MAIN Thread/UI Thread: 也叫UI线程，运行Android / iOS应用程序的主要应用程序的线程，它具有访问UI的权限，并且只能通过此线程更改UI。
-- Shadow Thread: 是RN使用React库进行布局计算和构造 UI 界面的线程。
-- JS Thread: React等JavaScript代码都在这个线程中执行。
+![RN 工作方式](/images/rn-old-ui.jpeg)
+RN 中有三个线程，分别如下：
+- MAIN Thread/UI Thread: 也叫 UI 线程，运行 Android / iOS 应用程序的主要应用程序的线程，它具有访问 UI 的权限，并且只能通过此线程更改 UI。
+- Shadow Thread: 是 RN 使用 React 库进行布局计算和构造 UI 界面的线程。
+- JS Thread: React 等 JavaScript 代码都在这个线程中执行。
 
-此外，还有一类Native Modules 线程，不同的Native Modules可以运行在不同的线程中。
+此外，还有一类 Native Modules 线程，不同的 Native Modules 可以运行在不同的线程中。
 
 ### 启动过程
-知道了RN的线程关系之后，接下来看RN是怎么运行的。
+知道了 RN 的线程关系之后，接下来看 RN 是怎么运行的。
 
-首先呢，App 启动时初始化 React Native 运行时环境（即Bridge），Bridge准备好以后开始Native渲染。
+首先呢，App 启动时初始化 React Native 运行时环境（即 Bridge），Bridge 准备好以后开始 Native 渲染。
 
-那么整个初始化 Bridge 过程分为4部分：
+那么整个初始化 Bridge 过程分为 4 部分：
 - 加载 JavaScript 代码：开发模式下从网络下载，生产环境从设备存储中读取。
 - 初始化 Native Module：根据 Native Module 注册信息，加载并实例化所有 Native Module。
 - 注入 Native Module 信息：取 Native Module 注册信息，作为全局变量注入到 JS Context 中。
@@ -71,31 +71,31 @@ RN中有三个线程，分别如下：
 
 Bridge 建立之后，JavaScript 代码开始执行，渲染用户界面并实现业务功能。
 
-![RN工作方式2](/images/rn-new-ui.jpeg)
+![RN 工作方式 2](/images/rn-new-ui.jpeg)
 
 渲染界面的过程：
 
 - JS 线程将视图信息(结构、样式、属性等) 传递给 Shadow 线程。
 - 创建出用于布局计算的 Shadow Tree。
-- Shadow 线程计算好布局之后，再将完整的视图信息（包括宽高、位置等）传递给UI线程，UI线程据此创建 Native View。
+- Shadow 线程计算好布局之后，再将完整的视图信息（包括宽高、位置等）传递给 UI 线程，UI 线程据此创建 Native View。
 
 用户动作反馈的过程：
-- 对于用户输入，则先由UI线程将相关信息打包成事件消息传递到 Shadow 线程。
-- Shadow线程再根据 Shadow Tree 建立的映射关系生成相应元素的指定事件。
+- 对于用户输入，则先由 UI 线程将相关信息打包成事件消息传递到 Shadow 线程。
+- Shadow 线程再根据 Shadow Tree 建立的映射关系生成相应元素的指定事件。
 - 最后将事件传递到 JS 线程，执行对应的 JS 回调函数。
 
 ## 根据项目唠桥接
-我前面讲了RN的基本原理，明白他是怎么运行的。那么日常生产中，我们可以用RN完成大部分工作，但是如果想用一些现成原生代码，或者让原生来处理一些高性能的多线程代码时怎么办？
+我前面讲了 RN 的基本原理，明白他是怎么运行的。那么日常生产中，我们可以用 RN 完成大部分工作，但是如果想用一些现成原生代码，或者让原生来处理一些高性能的多线程代码时怎么办？
 
-要实现原生与JS通信，就要使用RN的Bridge来实现，这里就需要我们自己封装Bridge。包括咱们自己项目中用到继承FIDO，安全键盘，Bugly等等的SDK都需要用到桥接。
+要实现原生与 JS 通信，就要使用 RN 的 Bridge 来实现，这里就需要我们自己封装 Bridge 。包括咱们自己项目中用到继承 FIDO，安全键盘，Bugly 等等的 SDK 都需要用到桥接。
 
-接下来我就从代码层面讲讲Bridge，其中也包括我在项目中遇到的坑点。
+接下来我就从代码层面讲讲 Bridge，其中也包括我在项目中遇到的坑点。
 
-### FIDO模块
-FIDO模块调用了第三方的SDK，然后由原生实现部分UI的交互部分。这里只需要JS调用原生提供的方法以及JS监听原生方法提供的回调。
-#### 一、添加FIDOModules
-FIDOModules是桥接核心的代码所在文件夹，其中mobile是工程名称，这里随意添加的。
-**Android代码**
+### FIDO 模块
+FIDO 模块调用了第三方的 SDK，然后由原生实现部分 UI 的交互部分。这里只需要 JS 调用原生提供的方法以及 JS 监听原生方法提供的回调。
+#### 一、添加 FIDOModules
+FIDOModules 是桥接核心的代码所在文件夹，其中 mobile 是工程名称，这里随意添加的。
+**Android 代码**
 ```java
 /**
  * android/app/src/main/java/com/mobile/FIDO/FIDOModules.java
@@ -128,8 +128,8 @@ public class FIDOModules extends ReactContextBaseJavaModule{
     public String getName() {
         return SET_NAME;
     }
-    
-    // 要导出一个方法给 JavaScript 使用，Java 方法需要使用注解@ReactMethod
+
+    // 要导出一个方法给 JavaScript 使用，Java 方法需要使用注解 @ReactMethod
     @ReactMethod
     public void fidoInit(Promise promise) throws ClassNotFoundException{
         try {
@@ -143,22 +143,22 @@ public class FIDOModules extends ReactContextBaseJavaModule{
 
     @ReactMethod
     public void fidoRegister(ReadableMap map) {
-        // 获取map中的数据
+        // 获取 map 中的数据
         String userName = map.getString("userName");
 
-        // 如果要做一些延时的操作，需要在Android的子线程中去调用
-        // 如果用UI线程，就不用写
+        // 如果要做一些延时的操作，需要在 Android 的子线程中去调用
+        // 如果用 UI 线程，就不用写
         UiThreadUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 // ...
             }
         });
-    
+
     }
 
     // 原生模块可以在没有被调用的情况下往 JavaScript 发送事件通知。
-    // 最简单的办法就是通过RCTDeviceEventEmitter，这可以通过ReactContext来获得对应的引用
+    // 最简单的办法就是通过 RCTDeviceEventEmitter ，这可以通过 ReactContext 来获得对应的引用
     private void sendEvent(
         ReactContext reactContext,
         String eventName,
@@ -168,7 +168,7 @@ public class FIDOModules extends ReactContextBaseJavaModule{
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(eventName, params);
     }
-    
+
     // 封装了一下返回的参数
     private void sendJSCode(String listenName, String title, String status, String res) {
         WritableMap params = Arguments.createMap();
@@ -180,14 +180,14 @@ public class FIDOModules extends ReactContextBaseJavaModule{
     }
 
     public void onSuccess(int reqType, String response) {
-        // 原生模块给JS发送事件
+        // 原生模块给 JS 发送事件
         sendJSCode("register", "注册成功", "0", response);
     }
     // ......
     // 这里只贴出了桥接所需的核心代码，其他代码省略掉了
 }
 ```
-对应的iOS代码如下：
+对应的 iOS 代码如下：
 ```c
 #import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
@@ -205,7 +205,7 @@ NS_ASSUME_NONNULL_BEGIN
 NS_ASSUME_NONNULL_END
 ```
 ```c
-// FIDOModules.m     省略掉.h文件
+// FIDOModules.m     省略掉 .h 文件
 
 #define FT_FIDO_INIT fidoInit
 #define FT_FIDO_REGISTER fidoRegister
@@ -215,7 +215,7 @@ NS_ASSUME_NONNULL_END
 
 @implementation FTFIDOManager
 
-// 为了实现RCTBridgeModule协议，你的类需要包含RCT_EXPORT_MODULE()宏
+// 为了实现 RCTBridgeModule 协议，你的类需要包含 RCT_EXPORT_MODULE() 宏
 RCT_EXPORT_MODULE(FIDOModules)
 
 RCT_REMAP_METHOD(FT_FIDO_INIT,
@@ -232,11 +232,11 @@ RCT_REMAP_METHOD(FT_FIDO_INIT,
 }
 
 RCT_EXPORT_METHOD(FT_FIDO_REGISTER:(NSDictionary *) json){
-    // 在oc中，收到的是一个字典
+    // 在 oc 中，收到的是一个字典
     userName = [json objectForKey:@"userName"];
 }
 
-#pragma 给js端发送事件
+#prama 给 js 端发送事件
 // 这里需要注册事件
 - (NSArray<NSString *> *)supportedEvents
 {
@@ -250,17 +250,17 @@ RCT_EXPORT_METHOD(FT_FIDO_REGISTER:(NSDictionary *) json){
                res:(NSString *)res
 {
   [self sendEventWithName:listenName body:@{@"msg": title,@"status": status,@"res":res}];
-} 
+}
 
 - (void)onSuccess:(NSString *)uafResponse
 {
-    // 原生模块给JS发送事件
+    // 原生模块给 JS 发送事件
     [self sendJSCode:@"register" title:@"注册成功" status:@"0" res:res];
 }
 @end
 ```
 #### 二、注册模块
-在Android中需要在应用的Package类的`createNativeModules`方法中添加这个模块，如果没有被注册，则在JavaScript中无法访问到。
+在 Android 中需要在应用的 Package 类的`createNativeModules`方法中添加这个模块，如果没有被注册，则在 JavaScript 中无法访问到。
 ```java
 /**
  * android/app/src/main/java/com/mobile/FIDO/FIDOPackage.java
@@ -292,7 +292,7 @@ public class FIDOPackage implements ReactPackage {
         return Collections.emptyList();
     }
 ```
-接下来需要到`MainApplication.java`中添加，因为APP启动时，先执行`MainApplication.java`，然后再执行`MainActivity.java`创建一个`MainActivity`。
+接下来需要到`MainApplication.java`中添加，因为 APP 启动时，先执行`MainApplication.java`，然后再执行`MainActivity.java`创建一个`MainActivity`。
 ```java
 /**
  * android/app/src/main/java/com/mobile/MainApplication.java
@@ -317,7 +317,7 @@ public class MainApplication extends Application implements ReactApplication {
 }
 ```
 #### 三、JavaScript 端封装调用
-一般将RN桥接部分的JavaScript代码封装起来，使用的时候调用一下就行了。
+一般将 RN 桥接部分的 JavaScript 代码封装起来，使用的时候调用一下就行了。
 ```typescript jsx
 import {
   NativeModules,
@@ -355,20 +355,20 @@ export async function registerFido(fn: (e: Event) => void) {
   });
 }
 ```
-### SafeKey模块
-安全键盘模块有一个特殊的需求，这边由于键盘是在TEE系统实现的，然后输入框需要用RN视图组件中的TextInput。现在需要使用`findNodeHandle`将RN中TextInput组件的tag值
-获取到，然后传递给Native那边，Native收到后通过tag值再获取对应的组件对象，最后和安全键盘绑定。整个实现的核心代码如下所示：
+### SafeKey 模块
+安全键盘模块有一个特殊的需求，这边由于键盘是在 TEE 系统实现的，然后输入框需要用 RN 视图组件中的 TextInput 。现在需要使用`findNodeHandle`将 RN 中 TextInput 组件的 tag 值
+获取到，然后传递给 Native 那边，Native 收到后通过 tag 值再获取对应的组件对象，最后和安全键盘绑定。整个实现的核心代码如下所示：
 
-:::tip 获取uimanager类
-Android部分的代码中注册模块，给JS提供调用方法等都和FIDO大同小异。这里只是展示tag需要的核心代码！！！
+:::tip 获取 uimanager 类
+Android 部分的代码中注册模块，给 JS 提供调用方法等都和 FIDO 大同小异。这里只是展示 tag 需要的核心代码！！！
 
-Android这里需要在`com`文件夹下在创建`facebook/react/uimanager/`文件夹，将`SafeKeyModule.java`文件写到新创建的文件夹下面，方便获取到RN的
+Android 这里需要在`com`文件夹下在创建`facebook/react/uimanager/`文件夹，将`SafeKeyModule.java`文件写到新创建的文件夹下面，方便获取到 RN 的
 `uimanager`类。
 :::
 ```java
 /**
  * android/app/src/main/java/com/facebook/react/uimanager/SafeKeyModule.java
- */   
+ */
 package com.facebook.react.uimanager;
 
 import com.facebook.react.bridge.Arguments;
@@ -387,7 +387,7 @@ import com.facebook.react.views.textinput.ReactEditText;
 public class SafeKeyModule extends ReactContextBaseJavaModule {
 
     private static final String SET_NAME = "SafeKeyboard";
-    
+
     public SafeKeyModule(@Nonnull ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
@@ -397,8 +397,8 @@ public class SafeKeyModule extends ReactContextBaseJavaModule {
     public String getName() {return SET_NAME;}
 
     /**
-     * 获取reactTag  RN端通过 findNodeHandle()获取
-     * 这里是重点，也是整个Native调用RN组件的关键
+     * 获取 reactTag  RN端通过 findNodeHandle() 获取
+     * 这里是重点，也是整个 Native 调用 RN 组件的关键
      * @param id
      */
     private ReactEditText getEditById(int id) {
@@ -411,9 +411,9 @@ public class SafeKeyModule extends ReactContextBaseJavaModule {
         UiThreadUtil.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                // 这里获取TextInput组件的tag
+                // 这里获取 TextInput 组件的 tag
                 final int reactTag = msg.getInt("reactTag");
-                // 这里根据TextInput组件获取对象
+                // 这里根据 TextInput 组件获取对象
                 textInput = getEditById(reactTag);
                 ...
             }
@@ -422,7 +422,7 @@ public class SafeKeyModule extends ReactContextBaseJavaModule {
 }
 ```
 
-Objective-c对应的代码如下：
+Objective-c 对应的代码如下：
 ```c
 #import "RFTSafeKeyModule.h"
 #import <React/RCTUIManager.h>
@@ -441,15 +441,15 @@ Objective-c对应的代码如下：
 RCT_EXPORT_MODULE(SafeKeyboard)
 
 RCT_EXPORT_METHOD(RFT_KEYBOARD_INIT:(nonnull NSDictionary *)msg){
-    // 这里ui需要在主线程中调用
+    // 这里 ui 需要在主线程中调用
   dispatch_async(dispatch_get_main_queue(), ^{
     NSNumber *reactTag = [msg objectForKey:@"reactTag"];
 
-    // 获取input
+    // 获取 input
     if(reactTag){
-        // 获取TextInput的核心代码
+        // 获取 TextInput 的核心代码
       self.textInput = (UITextField *)(((RCTBaseTextInputView*)[self->_bridge.uiManager viewForReactTag:reactTag]).backedTextInputView);
-      
+
       // 改变输入光标的颜色
       if([noChangeNumber integerValue] == 0){
         self.textInput.tintColor = [UIColor colorWithWhite:1.0 alpha:0];
@@ -460,7 +460,7 @@ RCT_EXPORT_METHOD(RFT_KEYBOARD_INIT:(nonnull NSDictionary *)msg){
 @end
 ```
 
-JavaScript代码实现：
+JavaScript 代码实现：
 ```typescript jsx
 import * as React from 'react';
 import {
@@ -496,11 +496,11 @@ export default const SafeInput:React.FC = ():JSX.element => {
 ```
 
 ### 结语
-关于RN的桥接我这里只是讲了一小部分，其中有些特殊的需求和爬过的坑也不止这一点，更要实践的探索和解决。比如还有调用原生UI组件等其他使用方法，有兴趣可以参考RN的官网，理解所有的原理和流程以后，才能写出更优秀的代码。
+关于 RN 的桥接我这里只是讲了一小部分，其中有些特殊的需求和爬过的坑也不止这一点，更要实践的探索和解决。比如还有调用原生 UI 组件等其他使用方法，有兴趣可以参考 RN 的官网，理解所有的原理和流程以后，才能写出更优秀的代码。
 
 ## 相关链接
-- [React Native官网](https://reactnative.dev/)
-- [React Native如何构建应用布局](https://www.freecodecamp.org/news/how-react-native-constructs-app-layouts-and-how-fabric-is-about-to-change-it-dd4cb510d055/)
+- [React Native 官网](https://reactnative.dev/)
+- [React Native 如何构建应用布局](https://www.freecodecamp.org/news/how-react-native-constructs-app-layouts-and-how-fabric-is-about-to-change-it-dd4cb510d055/)
 
 
 
@@ -510,7 +510,7 @@ export default const SafeInput:React.FC = ():JSX.element => {
 
 
 
-                                             
+
 
 
 

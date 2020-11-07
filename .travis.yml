@@ -13,7 +13,7 @@ deploy:
   local-dir: docs/.vuepress/dist
   repo: henryfordstick/henryfordstick.github.io
   github-token: $REPO_TOKEN
-  keep-history: true
+  keep_history: true
   on:
     branch: master
 

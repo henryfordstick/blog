@@ -1,33 +1,33 @@
-# 深入Typescript系列（一）
-> Typescript 官方文档内容繁杂，学习复习的成本高，次系列文章就是整理ts常用的方法。
+# 深入 TypeScript 系列（一）
+> TypeScript 官方文档内容繁杂，学习复习的成本高，本系列文章就是整理 ts 常用的方法。
 
-Typescript简称ts（接下来文中用ts表述），是Javascript的超集。
+TypeScript 简称 ts（接下来文中用 ts 表述），是 JavaScript 的超集。
 <br/>
 <img src="/images/basis-ts.png" width="30%">
 <br/>
-ts可以使用js上在提案中的一些语法特性，最主要的是ts是**静态语言**。
+ts 可以使用 js 上在提案中的一些语法特性，最主要的是 ts 是**静态语言**。
 :::tip 静态语言
  简单来说，⼀⻔语⾔在编译时报错，那么是**静态语⾔**，如果在运⾏时报错，那么是**动态语⾔**。
-::: 
-### ts的缺点
+:::
+### ts 的缺点
 - 与实际的框架结合会很坑
 - 配置学习成本高
-- Typescript的类型系统其实很复杂
-### ts的优点
-ts的优势也总结为三点：
+- TypeScript 的类型系统其实很复杂
+### ts 的优点
+ts 的优势也总结为三点：
 - 规避⼤量低级错误，避免时间浪费，省时
 - 减少多⼈协作项⽬的成本，⼤型项⽬友好，省⼒
 - 良好代码提⽰，不⽤反复⽂件跳转或者翻⽂档，省⼼
 
-知道这些以后，接下来就正式开始学习ts的内容:heart:！！！
+知道这些以后，接下来就正式开始学习 ts 的内容:heart:！！！
 ## 基础变量
-js的基础类型有 string、number、undefined、null、boolean、Symbol。
+js 的基础类型有 string、number、undefined、null、boolean、Symbol。
 
-ts增加的基础有 void（空值）、bigint(大数整数类型)、any（表示任何类型）、
+ts 增加的基础有 void（空值）、bigint(大数整数类型)、any（表示任何类型）、
 unknown（表示任何类型）、never（表示哪些永远不存在值的类型）。
 
 :::tip 类型注意事项
-- `any`类型是多⼈协作项⽬的⼤忌，很可能把Typescript变成AnyScript，通常在不得已的情况下， 不应该⾸先考虑使⽤此类型。
+- `any`类型是多⼈协作项⽬的⼤忌，很可能把 TypeScript 变成 AnyScript ，通常在不得已的情况下， 不应该⾸先考虑使⽤此类型。
 - `unknown` 和 `any`都可以表示任何类型，但是当 unknown 类型被确定是某个类型之前,它不能被进⾏任何操作⽐如实例化、getter、函数执⾏等等。
 - `never` 类型表⽰的是那些永不存在的值的类型，never 类型是任何类型的⼦类型，也可以赋值给任何类型。
 :::
@@ -55,10 +55,10 @@ let myFavoriteNumber = 'seven';
 let myFavoriteNumber2: string = 'seven';
 
 
-// never 抛出异常的函数永远不会有返回值 
+// never 抛出异常的函数永远不会有返回值
 function error(message: string): never {
-  throw new Error(message); 
-} 
+  throw new Error(message);
+}
 // 空数组，⽽且永远是空的
 const empty: never[] = [];
 
@@ -89,7 +89,7 @@ let henry:Person = {
 #### 1、数组
 数组有两种定义方式，⼀种是使⽤泛型，另一种是在元素后面加上`[]`。
 ```typescript
-let fibonacci: number[] = [1, 1, 2, 3, 5]; 
+let fibonacci: number[] = [1, 1, 2, 3, 5];
 let fibonacci2: Array<number> = [1, 1, 2, 3, 5];
 
 // --------- 用接口表示数组 ---------
@@ -184,7 +184,7 @@ abstract class Animals {
 // 子类必须实现抽象类的抽象方法
 // 抽象类做为其它派⽣类的基类使⽤,它们⼀般不会直接被实例化,
 // 不同于接⼝,抽象类可以包含成员的实 现细节。
-// 
+//
 abstract class Animal {
   eat() {
       console.log('eat')
@@ -207,11 +207,11 @@ class Dog extends Animal {
   static food: string = 'bones';
   sleep() {
       console.log('Dog sleep')
-  } 
+  }
   makeSound(): void{}
 }
 
-// console.log(Dog.prototype) 
+// console.log(Dog.prototype)
 let dog = new Dog('wangwang');
 // console.log(dog)
 // dog.pri() 外部不能访问

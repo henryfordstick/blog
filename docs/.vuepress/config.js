@@ -4,7 +4,6 @@ module.exports = {
   markdown: {
     lineNumbers: true
   },
-  base: '/',
   head: [
     ['link', { rel: 'icon', href: '/user.png' }]
   ],

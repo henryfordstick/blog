@@ -1,4 +1,4 @@
-# HTTP协议总结
+# HTTP 协议总结
 HTTP 协议是超文本传输协议，是用于从万维网服务器传输到本地浏览器的一种传输协议，网站的图片，js，css 都是基于 http 协议进行传输的。
 ## HTTP 协议的历史演变
 ### HTTP/0.9
@@ -334,4 +334,4 @@ HTTP 响应是由状态行、消息报头、响应正文组成。其中状态行
 - Content-Type 实体报头用语指明发送给接收者的实体正文的媒体类型。 Last-Modified 实体报头用于指示资源的最后修改日期和时间。 Expires 实体报头给出响应过期的日期和时间。
 
 ## 相关链接
-[http协议总结](https://lmjben.github.io/blog/osi-http.html)
+[http 协议总结](https://lmjben.github.io/blog/osi-http.html)

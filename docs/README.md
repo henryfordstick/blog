@@ -1,7 +1,7 @@
 ---
 home: true
 heroImage: /user.png
-tagline:
+tagline: ''
 actionText: 开始阅读 →
 actionLink: /blog/
 features:
