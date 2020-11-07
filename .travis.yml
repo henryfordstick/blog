@@ -1,7 +1,7 @@
 sudo: required
 language: node_js
 node_js:
-  - stable  # 要安装当前node最稳定版本
+  - '10'
 before_install:
   - npm install
 script:

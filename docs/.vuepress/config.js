@@ -8,7 +8,7 @@ module.exports = {
     ['link', { rel: 'icon', href: '/user.png' }]
   ],
   themeConfig:{
-    repo: 'henryfordstick',
+    repo: 'henryfordstick/blog',
     nav: [
       {
         text: "博客",
@@ -32,6 +32,9 @@ module.exports = {
         {
           title: '视野拓展',
           collapsable: false,
+          children: [
+            'expand-browser'
+          ]
         },
         {
           title: 'Framework',

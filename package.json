@@ -4,8 +4,15 @@
   "description": "记录技术成长的点滴",
   "main": "index.js",
   "scripts": {
+    "lint": "lint-md ./docs/blog",
+    "lint:fix": "lint-md ./docs --fix",
     "dev": "vuepress dev docs",
     "build": "vuepress build docs"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
   },
   "repository": "git@github.com:henryfordstick/henryblog.git",
   "author": "henry",
@@ -13,5 +20,4 @@
   "dependencies": {
     "vuepress": "^1.5.4"
   }
-
 }
