@@ -12,7 +12,7 @@ deploy:
   skip_cleanup: true
   local_dir: docs/.vuepress/dist
   repo: henryfordstick/henryfordstick.github.io
-  github-token: $REPO_TOKEN
+  token: $REPO_TOKEN
   keep_history: true
   on:
     branch: master
