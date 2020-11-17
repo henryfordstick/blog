@@ -15,7 +15,7 @@
 - 不可枚举的属性会被忽略。
 - 如果⼀个对象的属性值通过某种间接的方式指回该对象本身，即循环引用，属性也会被忽略。
 ```typescript
-function jsonStringify(obj:unknown):string {
+function jsonStringify(obj) {
     let type = typeof obj;
     if(type !== "object" || type === null){
         if(/string|undefined|function/.test(type)){
@@ -24,7 +24,7 @@ function jsonStringify(obj:unknown):string {
         return String(obj);
     } else {
         let json = [];
-        let arr: boolean = (obj && obj.constructor === Array);
+        let arr = (obj && obj.constructor === Array);
         for (let k in obj){
             let v = obj[k];
             let type = typeof v;

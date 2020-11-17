@@ -109,7 +109,11 @@ module.exports = {
             'arith-source-call-bind-apply',
             'arith-source-parse-stringify',
             'arith-source-emitter',
-            'arith-source-drag'
+            'arith-source-drag',
+            'arith-source-setInterval',
+            'arith-source-create',
+            'arith-source-curring',
+            'arith-source-instanceof'
           ]
         }
       ],
