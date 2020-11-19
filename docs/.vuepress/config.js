@@ -42,7 +42,7 @@ module.exports = {
           children: [
             'react-library',
             'react-library-core',
-            // 'react-source-one',
+            'react-source-one',
             'react-native',
             // 'react-native-principle',
             'react-native-bridge'
