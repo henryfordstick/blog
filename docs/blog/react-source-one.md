@@ -13,7 +13,7 @@
 - vue 做了内部优化，源码简单。两个更新属性的内部机制是不相同的。
 
 - react 用在大型项目比较好一些，react 比 vue 代码好组织一点。
-    - 作者给了最大的自由度，和ts代码结合起来相当好，hooks写起来代码更加简单。
+    - 作者给了最大的自由度，和 ts 代码结合起来相当好，hooks 写起来代码更加简单。
 
 - vue 封装的多，自由度少，框架内部做了优化。
 
@@ -170,14 +170,14 @@ function createElement(type, config, children) {
   );
 }
 ```
-从上面代码可以看出createElement最后返回了ReactElement对象，createElement传入了三个参数：
+从上面代码可以看出 createElement 最后返回了 ReactElement 对象，createElement 传入了三个参数：
 
-- type 指的是ReactElement的类型，有字符串、class类型、funtion类型、Fragment等等
-- config 就是传进来的绑在当前节点或者组件上的所有属性，在源码里可以看到config里的key, ref会被单独拎出来放在ReactElement上
-- children 可能一个或者多个，最后children会经过处理，在ReactElement的props.children返回，分两种情况：单个或者数组的形式。
+- type 指的是 ReactElement 的类型，有字符串、class 类型、function 类型、Fragment 等等
+- config 就是传进来的绑在当前节点或者组件上的所有属性，在源码里可以看到 config 里的 key, ref 会被单独拎出来放在 ReactElement 上
+- children 可能一个或者多个，最后 children 会经过处理，在 ReactElement 的 props.children 返回，分两种情况：单个或者数组的形式。
 
 ### 二、ReactElement
-ReactElement 返回虚拟dom对象。
+ReactElement 返回虚拟 dom 对象。
 ```js
 const ReactElement = function(type, key, ref, self, source, owner, props) {
   // reactElement在内部就是这么一个object
@@ -201,15 +201,15 @@ const ReactElement = function(type, key, ref, self, source, owner, props) {
 ```
 
 ## 总结
-React 中的 jsx 通过 babel 编译成 js节点。
+React 中的 jsx 通过 babel 编译成 js 节点。
 
 createElement 的作用是：
- - 判断ref，key的属性，然后将其他属性添加到props里面
- - 取出children，赋值给 props.children
+ - 判断 ref，key 的属性，然后将其他属性添加到 props 里面
+ - 取出 children，赋值给 props.children
  - 返回 ReactElement 元素
 
 react 元素必须有`$$typeof`这个属性，通过`isValidElement`判断元素是否有这个属性，没有就报错。
-- 作用是防止直接将 react 的元素动态传入数据库，这样做的危险是可能会造成xss攻击。
+- 作用是防止直接将 react 的元素动态传入数据库，这样做的危险是可能会造成 xss 攻击。
 - 这种功能一般不建议。`$$typeof`的核心是用 Sybmol 处理的变量，JSON.stringify 不支持转化 Sybmol 类型，转化结果为空。
 
 

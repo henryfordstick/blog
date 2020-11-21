@@ -43,6 +43,8 @@ module.exports = {
             'react-library',
             'react-library-core',
             'react-source-one',
+            'react-source-two',
+            'react-source-three',
             'react-native',
             // 'react-native-principle',
             'react-native-bridge'
