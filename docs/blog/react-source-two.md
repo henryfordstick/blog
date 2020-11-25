@@ -53,7 +53,7 @@ function mapChildren(children, func, context) {
   return result;
 }
 ```
-这个方法接受3个参数：
+这个方法接受 3 个参数：
 - `children` 就是将要被遍历的子组件数组
 - `func` 是对单个子组件需要执行的函数
 - `context` 则是 func 执行时 this 指针所指向的对象。
@@ -407,6 +407,6 @@ if (Array.isArray(mappedChild)) {
 上面整个流程图清晰的描述了整个 React.Children.map 的流程，整个核心代码实际上不难，重点是一步一步的跟下来，明白其中的原理。React.Children 其他方法也和这个类似，这里就不一一的讲解。
 
 ## 相关链接
-- [React源码阅读—React.Children.map](https://blog.csdn.net/hjc256/article/details/99943772)
+- [React 源码阅读—React.Children.map](https://blog.csdn.net/hjc256/article/details/99943772)
 
 

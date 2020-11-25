@@ -78,6 +78,7 @@ module.exports = {
           children:[
             'basis-ts1',
             'basis-ts2',
+            'basis-design-mode'
           ]
         },
         // {
