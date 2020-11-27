@@ -116,7 +116,8 @@ module.exports = {
             'arith-source-setInterval',
             'arith-source-create',
             'arith-source-curring',
-            'arith-source-instanceof'
+            'arith-source-instanceof',
+            'arith-source-promise'
           ]
         }
       ],

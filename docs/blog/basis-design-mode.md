@@ -105,7 +105,7 @@ proxy.save();
 ```
 
 ## 命令模式
-命令模式解决了js的if 和 else问题
+命令模式解决了 js 的 if 和 else 问题
 ```typescript
 // 1、接收者
 class Receiver {
@@ -151,7 +151,7 @@ invoker.action();
 ```
 
 ## 观察者模式
-详情查看[实现一个eventEmitter，拥有四个方法on, off, once 和 trigger](/arith/arith-source-emitter.html)
+详情查看[实现一个 eventEmitter，拥有四个方法 on, off, once 和 trigger](/arith/arith-source-emitter.html)
 ## 职责链模式
 使多个对象都有机会处理请求，从而避免请求发送者和接受者之间的耦合关系。将这些关系形成一条链，并沿着这条链处理该请求，直到一个对象处理它为止。
 ```typescript

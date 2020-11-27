@@ -6,7 +6,7 @@ Fiber 是对 React 核心算法的重构，也是 React 最重要的概念。
 - 相关链接
 
 ## 为什么要用 Fiber 调度
-1. React16 以前的调度算法，使用JS 引擎自身的函数调用栈，采用自顶向下递归，更新整个子树，这个过程不可打断，不可取消。如果子树特别大的话，主线程就会一直被占用，会造成页面的掉帧，出现卡顿。
+1. React16 以前的调度算法，使用 JS 引擎自身的函数调用栈，采用自顶向下递归，更新整个子树，这个过程不可打断，不可取消。如果子树特别大的话，主线程就会一直被占用，会造成页面的掉帧，出现卡顿。
 
 2. React16 推出的 Fiber 调度，分为两个阶段，一是 reconciliation 阶段，二是 commit 阶段。
     - **调度阶段（reconciliation）**：fiber 在执行过程中以 fiber 为基本单位，每执行完一个 fiber，都会有一个询问是否有优先级更高的任务的一个判断，如果有优先级更高的任务进来，就中断当前执行，先执行优先级更高的任务。这个阶段会进行 dom diff， 生成 workInProgressTree,并标记好所有的 side effect。
@@ -23,7 +23,7 @@ Fiber 的出现使大量的同步计算可以被拆解、异步化，使浏览�
 
 Fiber 把更新过程碎片化，每执行完一段更新过程，就把控制权交还给 React 负责任务协调的模块，看看有没有其他紧急任务要做，如果没有就继续去更新，如果有优先级更高的任务，那就去做优先级高的任务。
 
-## Fiber的实现原理
+## Fiber 的实现原理
 React Fiber 的做法是不使用 Javascript 的栈，而是将需要执行的操作放在自己实现的栈对象上。这样就能在内存中保留栈帧，以便更加灵活的控制调度过程，例如我们可以手动操纵栈帧的调用。这对我们完成调度来说是至关重要。
 
 那么 Fiber 调度 进行 diff 计算的时候，会生成一棵 Fiber 树。这棵树是在 Virtual DOM 树的基础上增加额外的信息来生成的，它本质上来说是一个链表。
@@ -31,17 +31,17 @@ React Fiber 的做法是不使用 Javascript 的栈，而是将需要执行的�
 Fiber 树在首次渲染的时候会一次性生成，在后续需要 diff 的时候，会根据已有的树和最新的 Virtual DOM 的信息，生成一颗新的树。
 这棵树每生成一个新的节点，就会将控制权交回给主线程，去检查有没有优先级更高的任务需要执行，如果没有，则继续构建树的过程。
 ![fiber树的更新过程](/images/fiber-root-state.png)
-如果有优先级更高的任务需要执行，则 Fiber Reconciler会丢弃正在生成的树，在空闲的时候重新执行一遍。
+如果有优先级更高的任务需要执行，则 Fiber Reconciler 会丢弃正在生成的树，在空闲的时候重新执行一遍。
 
 在构造 Fiber 树的过程中，Fiber Reconciler 会将需要更新的节点信息保存在 Effect List 当中，在渲染阶段执行的时候，会批量的更新相应的节点。
 
 ## ReactDOM.render 分析
 因为整个执行的过程是从 ReactDOM.render 开始的，所以从这里分析整个执行的过程。
 
-[react的3种启动方式](https://zh-hans.reactjs.org/docs/concurrent-mode-adoption.html#why-so-many-modes):
-- **Legacy模式**: `ReactDOM.render(<App />, rootNode)`，这是当前 React app 使用的方式。当前没有计划删除本模式，但是这个模式可能不支持这些新功能。
-- **Concurrent模式**: `ReactDOM.createRoot(rootNode).render(<App />)`，目前在实验中，未来稳定之后，打算作为 React 的默认开发模式。
-- **Blocking模式**:`ReactDOM.createBlockingRoot(rootNode).render(<App />)`，做为Legacy和Concurrent之间的过渡。
+[react 的 3 种启动方式](https://zh-hans.reactjs.org/docs/concurrent-mode-adoption.html#why-so-many-modes):
+- **Legacy 模式**: `ReactDOM.render(<App />, rootNode)`，这是当前 React app 使用的方式。当前没有计划删除本模式，但是这个模式可能不支持这些新功能。
+- **Concurrent 模式**: `ReactDOM.createRoot(rootNode).render(<App />)`，目前在实验中，未来稳定之后，打算作为 React 的默认开发模式。
+- **Blocking 模式**:`ReactDOM.createBlockingRoot(rootNode).render(<App />)`，做为 Legacy 和 Concurrent 之间的过渡。
 
 接下来我们从 Legacy 模式入手开始分析源码：
 :::warning
@@ -147,7 +147,7 @@ function legacyRenderSubtreeIntoContainer(
 接下来三，四分析一下其中重要的两个方法`legacyCreateRootFromDOMContainer` 和 `updateContainer`；
 
 ### 三、legacyCreateRootFromDOMContainer()
-创建一个ReactRooter。
+创建一个 ReactRooter。
 ```js
 function legacyCreateRootFromDOMContainer(
   container: Container,
@@ -401,7 +401,7 @@ function computeExpirationForFiber(
   return expirationTime;
 }
 ```
-过期时间的计算，通过 | 做了一个批处理： 如 `1.9 | 0` 结果是1，相当于一个取整的操作。
+过期时间的计算，通过 | 做了一个批处理： 如 `1.9 | 0` 结果是 1，相当于一个取整的操作。
 ```js
 // precision = 25
 // 间隔时间在25ms内， 得到的 expritiontime 时间一样的
@@ -426,7 +426,7 @@ function ceiling(num: number, precision: number): number {
   return (((num / precision) | 0) + 1) * precision;
 }
 ```
-假如同时创建了100个任务，那么经过批处理以后的事件都差不多。不同优先级任务会传不同的偏移量，把不同优先级的时间拉开差距，然后就把优先级拉开了差距。
+假如同时创建了 100 个任务，那么经过批处理以后的事件都差不多。不同优先级任务会传不同的偏移量，把不同优先级的时间拉开差距，然后就把优先级拉开了差距。
 
 ### 六、scheduleWork()
 :::warning
@@ -524,7 +524,7 @@ function scheduleUpdateOnFiber(
 2. 否则 执行 `ensureRootIsScheduled`
 :::
 :::warning performSyncWorkOnRoot 和 ensureRootIsScheduled 区别
-- `performSyncWorkOnRoot` 同步，立刻去走调度构建Fiber，
+- `performSyncWorkOnRoot` 同步，立刻去走调度构建 Fiber，
 - `ensureRootIsScheduled` 异步，会走任务系统，慢慢一个一个的调度，最后也会调度 `performSyncWorkOnRoot` 。
 
 `performSyncWorkOnRoot` 是调用浏览器的主线程执行的，`ensureRootIsScheduled` 是一个宏任务。
@@ -643,8 +643,8 @@ root.callbackNode = scheduleSyncCallback(
     - 把 callback 添加到 syncQueue 中
     - 如果还未发起调度, 会以 Scheduler_ImmediatePriority 执行调度 Scheduler_scheduleCallback
 2. scheduleCallback:
-    - 推断当前调度的优先级(legacymode 下都是ImmediatePriority)
-    - 执行调度Scheduler_scheduleCallback
+    - 推断当前调度的优先级(legacymode 下都是 ImmediatePriority)
+    - 执行调度 Scheduler_scheduleCallback
 
 两个函数最终都调用了 Scheduler_scheduleCallback => unstable_scheduleCallback。
 :::
@@ -739,7 +739,7 @@ function unstable_scheduleCallback(priorityLevel, callback, options) {
 }
 ```
 核心步骤：
-1. 新建task对象(基本属性如下图)
+1. 新建`task`对象(基本属性如下图)
     - 将回调函数挂载到 `task.callback` 之上
     ![taskCallback](/images/task.c279b8db.png)
 2. 把`task`对象加入到一个队列中(注意: 这里的 2 个队列都是小顶堆数组, 保证优先级最高的任务排在最前面)
