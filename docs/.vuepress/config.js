@@ -92,6 +92,7 @@ module.exports = {
           collapsable: false,
           children: [
             'arith-basic',
+            'arith-sort',
             'arith-time',
             'arith-array'
           ]
@@ -124,8 +125,12 @@ module.exports = {
       // '/interview/':[],
       '/book/':[
         {
-          title: "技术相关",
-          collapsable: false,
+          title: "《图解 Google V8》",
+          // collapsable: false,
+          children: [
+            'V8-prepared-execution',
+            'V8-function'
+          ]
         },
         {
           title: "其他",

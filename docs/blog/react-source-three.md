@@ -224,20 +224,21 @@ export function updateContainer(
     container.pendingContext = context;
   }
 
-  //   新建一个update
-  //   expirationTime: expirationTime,
-  //   tag: UpdateState,
-  //   payload: null,
+  // 新建一个update
+  // let update = { // update的内容
+  //   expirationTime: expirationTime, // 过期时间
+  //   tag: UpdateState, //
+  //   payload: null,  // 组件 element
   //   callback: null,
   //   next: null,
   //   nextEffect: null,
+  // }
   const update = createUpdate(expirationTime, suspenseConfig);
 
   update.payload = {element};
 
   callback = callback === undefined ? null : callback;
   if (callback !== null) {
-
     update.callback = callback;
   }
   // update 添加到 fiber.updateQuene链表
@@ -248,9 +249,9 @@ export function updateContainer(
   return expirationTime;
 }
 ```
-拿到 FiberNode，然后根据任务的优先级，得到不同的过期时间 expirationTime，这里重要的是 computeExpirationForFiber 函数，怎么来确定过期时间的。
+拿到 `FiberNode`，然后根据任务的优先级，得到不同的过期时间 `expirationTime`，这里重要的是 `computeExpirationForFiber` 函数，怎么来确定过期时间的。
 
-接下来就是 `enqueueUpdate` 方法，将需要更新的 update 信息添加到 fiber.updateQueue 链表中。最后根据更新的信息做对比更新。
+接下来就是 `enqueueUpdate` 方法，将需要更新的 `update` 信息添加到 `fiber.updateQueue` 链表中。最后根据更新的信息做对比更新。
 
 :::warning
 这里重要的就是怎么分配优先级`computeExpirationForFiber`，然后就是根据分配好的优先级调度执行 `scheduleWork`。
