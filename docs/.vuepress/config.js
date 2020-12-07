@@ -53,6 +53,11 @@ module.exports = {
         {
           title: 'HTML/CSS',
           collapsable: false,
+          children: [
+            'css-bfc',
+            'css-extends',
+            'css-flex'
+          ]
         },
         {
           title: 'JavaScript基础',
@@ -92,9 +97,16 @@ module.exports = {
           collapsable: false,
           children: [
             'arith-basic',
-            'arith-sort',
+            'arith-sorting',
             'arith-time',
             'arith-array'
+          ]
+        },
+        {
+          title: "算法公式大全",
+          collapsable: false,
+          children: [
+            'routine-thought'
           ]
         },
         {
@@ -118,7 +130,10 @@ module.exports = {
             'arith-source-create',
             'arith-source-curring',
             'arith-source-instanceof',
-            'arith-source-promise'
+            'arith-source-promise',
+            'arith-source-promiseall',
+            'arith-source-sleep',
+            'arith-source-flat',
           ]
         }
       ],
@@ -129,7 +144,17 @@ module.exports = {
           // collapsable: false,
           children: [
             'V8-prepared-execution',
-            'V8-function'
+            'V8-function',
+            'V8-attributes',
+            'V8-Functional-expression',
+            'V8-proto',
+            'V8-scope',
+            'V8-typeChange',
+            'V8-d8',
+            'V8-runtime',
+            'V8-machine-code',
+            'V8-Stack-heap',
+            'V8-closure'
           ]
         },
         {
