@@ -134,6 +134,8 @@ module.exports = {
             'arith-source-promiseall',
             'arith-source-sleep',
             'arith-source-flat',
+            'arith-source-copy',
+            'arith-source-find'
           ]
         }
       ],
@@ -154,7 +156,8 @@ module.exports = {
             'V8-runtime',
             'V8-machine-code',
             'V8-Stack-heap',
-            'V8-closure'
+            'V8-closure',
+            'V8-bytecode-one'
           ]
         },
         {

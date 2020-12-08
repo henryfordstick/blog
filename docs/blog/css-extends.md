@@ -20,7 +20,7 @@
 
 - letter-spacing：中文或者字母之间的间距
 
-- text-transform：控制文本大小写（就是uppercase、lowercase、capitalize这三个）
+- text-transform：控制文本大小写（就是 uppercase、lowercase、capitalize 这三个）
 
 - color：文本颜色
 
@@ -28,9 +28,9 @@
 - visibility：控制元素显示隐藏
 
 ## 四、列表布局属性
-- list-style：列表风格，包括list-style-type、list-style-image等
+- list-style：列表风格，包括 list-style-type、list-style-image 等
 
-## 五、光标属性：
+## 五、光标属性
 - cursor：光标显示为何种形态
 
 

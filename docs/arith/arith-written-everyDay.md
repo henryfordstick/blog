@@ -189,3 +189,51 @@ function createIterator(obj){
   }
 }
 ```
+#### 13、手写: 模拟红绿灯：红灯3s，绿灯2s，黄灯1s，如此循环 (async await)
+```js
+async function trafficLight(){
+  let fn = async (color,wait) => {
+    await new Promise((resolve, reject) => {
+      console.log(new Date(),color,"亮");
+      setTimeout(() => {
+        console.log(new Date(),color,"灭");
+        resolve();
+      },wait * 1000);
+    })
+  }
+
+  while (true){
+    await fn("红",3);
+    await fn("黄",1);
+    await fn("绿",2);
+  }
+}
+
+trafficLight();
+```
+#### 14、给你一个按升序排序的整数数组 num（可能包含重复数字），请你将它们分割成一个或多个长度为 3 的子序列，其中每个子序列都由连续整数组成。
+```js
+// 如果可以完成上述分割，则返回 true ；否则，返回 false 。
+
+// 示例：
+
+// 输入: [1,2,3,3,4,5]
+// 输出: True
+// 解释:
+// 你可以分割出这样两个连续子序列 :
+// 1, 2, 3
+// 3, 4, 5
+
+function mySplit(num){
+  if(!num || !num.length || num % 3 !== 0){
+    return false;
+  }
+
+  for(let i = 2; i < num.length; i ++){
+    if(num[i - 1] - num[i - 2] !== num[i] - num[i - 1]){
+      return false;
+    }
+  }
+  return true;
+}
+```

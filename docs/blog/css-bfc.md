@@ -77,7 +77,7 @@
 
 鉴于上面普通流对布局的影响，那么 "救世主" BFC 来了，下面我们具体看看 BFC。
 
-## 三、BFC的作用
+## 三、BFC 的作用
 BFC（块级格式化上下文 - Block formatting context）是一个独立的布局环境，其中的元素布局是不受外界的影响，并且在一个 BFC 中，块盒与行盒（行盒由一行中所有的内联元素所组成）都会垂直的沿着其父元素的边框排列。
 
 ### BFC 的布局规则
@@ -94,7 +94,7 @@ BFC（块级格式化上下文 - Block formatting context）是一个独立的�
 5. overflow 值不为 visible
 
 ### 应用场景
-#### 1、清除内部的浮动，触发父元素的 BFC属性，会包括 float 元素
+#### 1、清除内部的浮动，触发父元素的 BFC 属性，会包括 float 元素
 防止浮动导致父元素高度塌陷，父级设置为 BFC。
 
 <img src="/images/css-float-height.jpg" width="45%" style="margin-right: 10px" />
@@ -118,7 +118,7 @@ BFC（块级格式化上下文 - Block formatting context）是一个独立的�
 ![两栏布局](/images/css两栏布局1.jpg)
 - 左边绝对定位，右边设置 margin-left
 ![两栏布局](/images/css两栏布局2.jpg)
-- 左侧为绝对定位，右侧元素设置顶线和右线的位置为0，width 为100%
+- 左侧为绝对定位，右侧元素设置顶线和右线的位置为 0，width 为 100%
 ![两栏布局](/images/css两栏布局3.jpg)
 
 
