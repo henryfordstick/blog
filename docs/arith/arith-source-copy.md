@@ -220,4 +220,47 @@ function deepCopy(obj,weakMap = new WeakMap()){
   return result;
 }
 ```
+### 4、特殊系列
+#### 拷贝 buffer
+```js
+
+```
+
+## 简单面试版
+只考虑对象
+### 一、浅拷贝
+```js
+const isObject = obj => (typeof obj === "object" || typeof obj === "function") && obj !== null;
+
+function cloneShallow(obj) {
+  if(!isObject) return obj;
+  let res = Array.isArray(obj) ? [] : {};
+  for(let key in obj){
+    if(obj.hasOwnProperty(key)){
+      res[key] = obj[key]
+    }
+  }
+  return res;
+}
+```
+
+### 深拷贝
+```js
+const isObject = obj => (typeof obj === "object" || typeof obj === "function") && obj !== null;
+
+function cloneDeep(obj){
+    if(!isObject) return obj;
+    let res = Array.isArray(obj) ? [] : {};
+    for(let key in obj){
+      if(obj.hasOwnProperty(key)){
+        if(typeof obj[key] === "object"){
+          res[key] = cloneDeep(obj[key])
+        } else {
+          res[key] = obj[key];
+        }
+      }
+    }
+    return res;
+}
+```
 

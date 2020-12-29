@@ -47,7 +47,8 @@ module.exports = {
             'react-source-three',
             'react-native',
             // 'react-native-principle',
-            'react-native-bridge'
+            'react-native-bridge',
+            'react-router'
           ]
         },
         {
@@ -56,7 +57,8 @@ module.exports = {
           children: [
             'css-bfc',
             'css-extends',
-            'css-flex'
+            'html-click'
+            // 'css-flex'
           ]
         },
         {
@@ -135,7 +137,8 @@ module.exports = {
             'arith-source-sleep',
             'arith-source-flat',
             'arith-source-copy',
-            'arith-source-find'
+            'arith-source-find',
+            'arith-source-lru'
           ]
         }
       ],
