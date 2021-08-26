@@ -37,6 +37,13 @@ module.exports = {
           ]
         },
         {
+          title: 'canvas系列',
+          collapsable: false,
+          children: [
+            'cvs-start'
+          ]
+        },
+        {
           title: 'Framework',
           collapsable: false,
           children: [
