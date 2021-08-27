@@ -153,7 +153,7 @@ module.exports = {
       '/book/':[
         {
           title: "《图解 Google V8》",
-          // collapsable: false,
+          collapsable: true,
           children: [
             'V8-prepared-execution',
             'V8-function',
@@ -168,6 +168,14 @@ module.exports = {
             'V8-Stack-heap',
             'V8-closure',
             'V8-bytecode-one'
+          ]
+        },
+        {
+          title: "《JavaScript 正则表达式迷你书》",
+          collapsable: false,
+          children: [
+            'regular-guide1',
+            
           ]
         },
         {
