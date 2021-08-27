@@ -18,7 +18,6 @@
   "repository": "git@github.com:henryfordstick/henryblog.git",
   "author": "henry",
   "license": "MIT",
-
   "dependencies": {
     "lint-md-cli": "^0.1.2",
     "vuepress": "^1.4.0"
