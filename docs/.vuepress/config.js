@@ -175,7 +175,8 @@ module.exports = {
           collapsable: false,
           children: [
             'regular-guide1',
-            
+            'regular-guide2',
+            'regular-guide3'
           ]
         },
         {
