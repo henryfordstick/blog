@@ -176,7 +176,8 @@ module.exports = {
           children: [
             'regular-guide1',
             'regular-guide2',
-            'regular-guide3'
+            'regular-guide3',
+            'regular-guide4',
           ]
         },
         {
