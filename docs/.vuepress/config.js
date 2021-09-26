@@ -178,6 +178,7 @@ module.exports = {
             'regular-guide2',
             'regular-guide3',
             'regular-guide4',
+            'regular-guide5',
           ]
         },
         {
