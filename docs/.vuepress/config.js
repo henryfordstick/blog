@@ -181,6 +181,27 @@ module.exports = {
           ]
         },
         {
+          title: "《看完够用的函数式编程》",
+          collapsable: false,
+          children: [
+            
+          ]
+        },
+        {
+          title: "《CSS 世界》",
+          collapsable: false,
+          children: [
+            
+          ]
+        },
+        {
+          title: "《图解 HTTP》",
+          collapsable: false,
+          children: [
+            
+          ]
+        },
+        {
           title: "其他",
           collapsable: false,
         }
