@@ -180,6 +180,7 @@ module.exports = {
             'regular-guide4',
             'regular-guide5',
             'regular-guide6',
+            'regular-guide7',
           ]
         },
         {
