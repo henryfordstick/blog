@@ -171,8 +171,15 @@ module.exports = {
           ]
         },
         {
-          title: "《JavaScript 正则表达式迷你书》",
+          title: "《浏览器工作原理与实践》",
           collapsable: false,
+          children: [
+            'brower-start'
+          ]
+        },
+        {
+          title: "《JavaScript 正则表达式迷你书》",
+          collapsable: true,
           children: [
             'regular-guide1',
             'regular-guide2',
