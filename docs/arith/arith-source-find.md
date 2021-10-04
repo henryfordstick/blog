@@ -8,14 +8,14 @@ function quickSort(arr){
   let small = [];
   let refer = arr[0];
 
-  for(let i = 0; i < arr.length; i++){
+  for(let i = 1; i < arr.length; i++){
     if(arr[i] < refer){
       small.push(arr[i]);
     } else {
       big.push(arr[i])
     }
   }
-  return quickSort(small).concat(refer,big);
+  return quickSort(small).concat(refer,quickSort(big));
 }
 ```
 

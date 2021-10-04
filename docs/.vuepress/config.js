@@ -18,10 +18,10 @@ module.exports = {
         text: "算法",
         link: "/arith/",
       },
-      // {
-      //   text: "面试题",
-      //   link: "/interview/",
-      // },
+      {
+        text: "面试题",
+        link: "/interview/",
+      },
       {
         text: "阅读",
         link: "/book/",
@@ -149,7 +149,15 @@ module.exports = {
           ]
         }
       ],
-      // '/interview/':[],
+      '/interview/':[
+        'arith-question',
+        'css-question',
+        'js-question',
+        'frameWork-question',
+        'internet-question',
+        'node-question',
+        'webpack-question'
+      ],
       '/book/':[
         {
           title: "《图解 Google V8》",
@@ -178,7 +186,7 @@ module.exports = {
           ]
         },
         {
-          title: "《JavaScript 正则表达式迷你书》",
+          title: "《JS 正则表达式迷你书》",
           collapsable: true,
           children: [
             'regular-guide1',

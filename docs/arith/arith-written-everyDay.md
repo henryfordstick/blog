@@ -237,3 +237,221 @@ function mySplit(num){
   return true;
 }
 ```
+#### 15、实现两个大数相加
+```js
+function add(a,b) {
+  if(isNaN(a) || isNaN(b)) return "";
+  a = String(a); b = String(b);
+  let maxLength = Math.max(a.length,b.length);
+  a = a.padStart(maxLength,0);
+  b = b.padStart(maxLength,0);
+  let t = 0;
+  let f = 0; // 进位
+  let sum = "";
+  for(let i = maxLength - 1; i > 0; i --){
+    t = parseInt(a[i]) + parseInt(b[i]) + f;
+    f = Math.floor(t / 10);
+    sum = t % 10 + sum;
+  }
+  if(f > 0){
+    sum = f + sum;
+  }
+  return sum;
+}
+
+function addBigNum(a,b){
+  var res = "",loc = 0;
+  a = a.slice();
+  b = b.slice();
+  while (a.length || b.length || loc){
+    //~~把字符串转换为数字，用~~而不用parseInt，是因为~~可以将undefined转换为0，当a或b数组超限，不用再判断undefined
+    //注意这里的+=，每次都加了loc本身，loc为true，相当于加1，loc为false，相当于加0
+    loc += ~~a.pop() + ~~b.pop();
+    //字符串连接，将个位加到res头部
+    res = (loc % 10) + res;
+    //当个位数和大于9，产生进位，需要往res头部继续加1，此时loc变为true，true + 任何数字，true会被转换为1
+    loc = loc > 9;
+  }
+  return res.replace(/^0+/,'');
+}
+```
+#### 16、实现两个大数相乘
+```js
+function mulBigNum(a,b){
+    if(isNaN(a) || isNaN(b)) return "";
+    a = String(a); b = String(b);
+    let len = a.length + b.length;
+    let arr = new Array(len).fill(0); //为了进行加法运算需要先初始化为0
+
+    for(let i = a.length - 1; i >= 0; i --){
+        for(let j = b.length - 1; j >= 0; j --){ //倒序，从个位开始计算
+            let mul = a[i] * b[j] + arr[i + j + 1];
+            arr[i + j] += Math.floor(mul / 10);
+            arr[i + j + 1] = mul % 10;
+        }
+    }
+    return (arr.join("").replace(/^0+/,"")) ; //去掉首位0
+}
+```
+#### 17、算法： 实现一个函数，获取页面的元素个数，返回前三多的元素标签名称：如 ['div','span','li']
+-  前三多改成前n多呢
+-  如果元素个数重复呢 ['div','span','li','a']  div 和 span 的数量一样，那么前三多就要输出四个。
+```js
+function findNodeCount(n){
+  let allTag = Array.from(document.getElementsByTagName("*"));
+  let map = new Map();
+  allTag.forEach(node => {
+    let count = map.has(node.tagName) ? map.get(node.tagName) + 1 : 1;
+    map.set(node.tagName,count);
+  });
+
+  let tagArr = [];
+  for(let [key,val] of map.entries()){
+    tagArr.push({name: key,count: val});
+  }
+
+  let sortArr = tagArr.sort((a,b) => b.count - a.count);
+  let result = [];
+  let num = Infinity;
+  let times = 0;
+  for(let i = 0; i < sortArr.length; i ++){
+    let ele = sortArr[i];
+    if(num === ele.count){
+      result.push(ele.name);
+    } else {
+      num = ele.count;
+      if(++ times > n){
+        break;
+      }
+      result.push(ele.name);
+    }
+  }
+  return result;
+}
+findNodeCount(3);
+```
+
+#### 18、算法: 实现一个函数 add(1)(2,3)(4).getValue()
+```js
+function add(){
+  let sum = Array.from(arguments).reduce((a,b) => a + b);
+  function fn(){
+    let result = Array.from(arguments).reduce((a,b) => a + b);
+    sum += result;
+    return fn;
+  }
+  fn.getValue = function() {
+    return sum;
+  }
+  return fn;
+}
+```
+
+#### 19、实现一个批量请求函数 multiRequest(urls, maxNum)，要求如下：
+- 要求最大并发数 maxNum
+- 每当有一个请求返回，就留下一个空位，可以增加新的请求
+- 所有请求完成后，结果按照 urls 里面的顺序依次打出复制代码
+```js
+function multiRequest(urls = [], maxNum) {  // 请求总数量
+  const len = urls.length;  // 根据请求数量创建一个数组来保存请求的结果
+  const result = new Array(len).fill(false);  // 当前完成的数量
+  let count = 0;
+  return new Promise((resolve, reject) => {// 请求maxNum个
+    while (count < maxNum) {
+      next();
+    }function next() {
+      let current = count++;
+      // 处理边界条件
+      if (current >= len) {
+        // 请求全部完成就将promise置为成功状态, 然后将result作为promise值返回
+        !result.includes(false) && resolve(result);return;
+      }
+      const url = urls[current];
+      console.log(`开始 ${current}`,
+      new Date().toLocaleString());
+      fetch(url)
+        .then((res) => {          // 保存请求结果
+          result[current] = res;
+          console.log(`完成 ${current}`,
+          new Date().toLocaleString());
+            // 请求没有全部完成, 就递归
+          if (current < len) {
+            next();
+          }
+        })
+        .catch((err) => {
+          console.log(`结束 ${current}`,
+          new Date().toLocaleString());
+          result[current] = err;          // 请求没有全部完成, 就递归
+          if (current < len) {
+            next();
+          }
+        });
+    }
+  });
+}
+
+
+async function fetchAll(urls, max) {
+  // 通知结果
+  let resolve = null;
+  const promise = new Promise((res) => {
+    resolve = res;
+  });
+  // 请求数量
+  let count = 0;
+  // 最大通道
+  max = max || 6;
+  // 当前为完成坐标
+  let currentIndex = 0;
+  // 结果数组
+  let resultArr = [];
+  // 占用所有的可用请求线路
+  for (let i = 0; i < max; i++) {
+    request(urls, currentIndex, resultArr);
+    count++;
+  }
+  async function request(urls, index, result) {
+    const timeStart = Date.now();
+    console.log(`开始 ${index}`);
+    currentIndex++;
+    try {
+      const data = await fetch(urls[index]);
+      result[index] = data;
+    } catch (error) {
+      console.log(`第${index}个请求失败，失败日志：`, error);
+      result[index] = null;
+    }
+    if (currentIndex < urls.length) {
+      // 开始下一个
+      request(urls, currentIndex, result);
+    } else {
+      // 最后的请求队列
+      count--;
+    }
+    // 全部完成
+    if (count <= 0) {
+      resolve(result);
+      console.log("全部请求结束", count);
+    }
+  }
+  return await promise;
+}
+const fetch = (url) =>
+  new Promise((res) => {
+    setTimeout(() => {
+      res({ url });
+    }, Math.round(Math.random() * 200 + 500));
+  });
+
+async function init() {
+  let urls = [];
+
+  for (let i = 0; i < 10; i++) {
+    urls.push(i + "-");
+  }
+  console.log(await fetchAll(urls, 4));
+}
+init();
+// async 果然是一个很伟大语法
+```

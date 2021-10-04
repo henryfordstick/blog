@@ -3,9 +3,9 @@
 
 #### 用法
 - `func.call(thisArg, arg1, arg2, ...)` ，调⽤⼀个函数, 其具有⼀个指定的this值和分别提供的参数(参数的列表)。
-  
+
 - `func.apply(thisArg, [argsArray])` ，调⽤⼀个函数，以及作为⼀个数组（或类数组对象）提供的参数。
-  
+
 - `bind` 会创建⼀个新函数。当这个新函数被调⽤时，bind() 的第⼀个参数将作为它运⾏时的 this，之 后的⼀序列参数将会在传递的实参前传⼊作为它的参数。
 
 #### 核心思想
@@ -47,7 +47,7 @@ Function.prototype['myapply'] = function(context) {
   context.fn  = this;
   let result;
   if(arguments[1]){
-    result = context.fn(arguments[1]);
+    result = context.fn(...arguments[1]);
   } else {
     result = context.fn();
   }
@@ -68,9 +68,9 @@ Function.prototype['mybind'] = function (context) {
   return function F() {
     // 因为返回了一个函数F，这个函数可以用 new F() 的方式调用，所以需要判断
     if(this instanceof F){
-      return new fn(...args,...args);
+      return new fn(...args,...arguments);
     }
-    return fn.apply(context,args.concat(...arguments));
+    return fn.apply(context,args.concat(arguments));
   }
 };
 ```
