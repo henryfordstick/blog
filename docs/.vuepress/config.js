@@ -129,6 +129,7 @@ module.exports = {
           title: "探索源码系列",
           collapsable: false,
           children: [
+            'arith-source-all',
             'arith-source-debounce-throttle',
             'arith-source-new',
             'arith-source-call-bind-apply',
